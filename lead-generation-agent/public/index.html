@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BioLeadGen - Intelligent Lead Generation for 3D In-Vitro Models</title>
+    <meta
+      name="description"
+      content="Web agent for discovering, enriching, and ranking qualified leads in biomedical research and 3D in-vitro models"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.6;
+        color: #1a1a1a;
+        background-color: #ffffff;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header */
+      header {
+        border-bottom: 1px solid #e5e5e5;
+        padding: 16px 0;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: #1a1a1a;
+      }
+
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        background-color: #2563eb;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      .logo-text {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: #666;
+        font-size: 14px;
+        transition: color 0.2s;
+      }
+
+      nav a:hover {
+        color: #1a1a1a;
+      }
+
+      .btn {
+        background-color: #2563eb;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        display: inline-block;
+        transition: background-color 0.2s;
+      }
+
+      .btn:hover {
+        background-color: #1d4ed8;
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        color: #1a1a1a;
+        border: 1px solid #e5e5e5;
+      }
+
+      .btn-outline:hover {
+        background-color: #f5f5f5;
+      }
+
+      /* Hero Section */
+      .hero {
+        padding: 80px 0;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        line-height: 1.2;
+      }
+
+      .hero .highlight {
+        color: #2563eb;
+      }
+
+      .hero p {
+        font-size: 20px;
+        color: #666;
+        margin-bottom: 32px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+      }
+
+      /* Data Sources Section */
+      .data-sources {
+        background-color: #f9fafb;
+        padding: 64px 0;
+        border-top: 1px solid #e5e5e5;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 48px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+      }
+
+      .card {
+        background: white;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        padding: 24px;
+      }
+
+      .card-icon {
+        width: 32px;
+        height: 32px;
+        margin-bottom: 16px;
+        color: #2563eb;
+      }
+
+      .card h3 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .card p {
+        font-size: 14px;
+        color: #666;
+        line-height: 1.5;
+      }
+
+      /* How It Works Section */
+      .how-it-works {
+        padding: 64px 0;
+      }
+
+      .steps {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .step {
+        display: flex;
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .step-number {
+        width: 48px;
+        height: 48px;
+        background-color: #2563eb;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
+      .step-content h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .step-content p {
+        color: #666;
+        line-height: 1.6;
+      }
+
+      /* Scoring Section */
+      .scoring {
+        background-color: #f9fafb;
+        padding: 64px 0;
+        border-top: 1px solid #e5e5e5;
+      }
+
+      .scoring-content {
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 48px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .score-table {
+        background: white;
+        border: 1px solid #e5e5e5;
+        border-radius: 8px;
+        padding: 24px;
+      }
+
+      .score-header {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e5e5e5;
+        margin-bottom: 16px;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .score-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        font-size: 14px;
+      }
+
+      .score-row span:first-child {
+        color: #666;
+      }
+
+      .score-row span:last-child {
+        font-weight: 600;
+        color: #2563eb;
+      }
+
+      /* CTA Section */
+      .cta {
+        padding: 80px 0;
+        text-align: center;
+      }
+
+      .cta h2 {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+
+      .cta p {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 32px;
+      }
+
+      /* Footer */
+      footer {
+        border-top: 1px solid #e5e5e5;
+        background-color: #f9fafb;
+        padding: 32px 0;
+        text-align: center;
+      }
+
+      footer p {
+        font-size: 14px;
+        color: #666;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 36px;
+        }
+
+        .hero p {
+          font-size: 18px;
+        }
+
+        .hero-actions {
+          flex-direction: column;
+        }
+
+        nav {
+          display: none;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <a href="/" class="logo">
+            <div class="logo-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                <polyline points="17 6 23 6 23 12"></polyline>
+              </svg>
+            </div>
+            <span class="logo-text">BioLeadGen</span>
+          </a>
+          <nav>
+            <a href="#features">Features</a>
+            <a href="#how-it-works">How it Works</a>
+            <a href="/search" class="btn">Get Started</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>
+          Intelligent Lead Generation for<br />
+          <span class="highlight">3D In-Vitro Models</span>
+        </h1>
+        <p>
+          Discover, enrich, and prioritize qualified leads across LinkedIn, PubMed, conferences, and funding databases.
+          Built for business development teams in life sciences.
+        </p>
+        <div class="hero-actions">
+          <a href="/search" class="btn">Launch Search</a>
+          <a href="/dashboard" class="btn btn-outline">View Demo Dashboard</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Sources Section -->
+    <section id="features" class="data-sources">
+      <div class="container">
+        <h2 class="section-title">Comprehensive Data Sources</h2>
+        <div class="grid">
+          <div class="card">
+            <svg
+              class="card-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <h3>Professional Networks</h3>
+            <p>
+              LinkedIn and Sales Navigator for identifying Directors of Toxicology, Heads of Preclinical Safety, and key
+              decision-makers.
+            </p>
+          </div>
+
+          <div class="card">
+            <svg
+              class="card-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <h3>Scientific Publications</h3>
+            <p>
+              PubMed, Google Scholar, and bioRxiv for tracking recent papers on DILI, 3D cell culture, and hepatic
+              models.
+            </p>
+          </div>
+
+          <div class="card">
+            <svg
+              class="card-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path
+                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+              ></path>
+            </svg>
+            <h3>Conference Data</h3>
+            <p>
+              SOT, AACR, ISSX attendee lists, exhibitors, and presenters actively researching new methodologies.
+            </p>
+          </div>
+
+          <div class="card">
+            <svg
+              class="card-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            <h3>Funding Intelligence</h3>
+            <p>Crunchbase, PitchBook, and FierceBiotech for Series A/B funding rounds and budget availability.</p>
+          </div>
+
+          <div class="card">
+            <svg
+              class="card-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+              <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+              <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+            </svg>
+            <h3>Grant Databases</h3>
+            <p>NIH RePORTER and CORDIS for academic and government-funded research on liver toxicity and 3D models.</p>
+          </div>
+
+          <div class="card">
+            <svg
+              class="card-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+            <h3>Contact Enrichment</h3>
+            <p>
+              Business emails, phone numbers, and location intelligence to distinguish remote workers from HQ locations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+      <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3>Identification</h3>
+              <p>
+                Define your target criteria: job titles, keywords, companies, and locations. The agent scans LinkedIn,
+                PubMed, and conference lists to build your initial prospect list.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3>Enrichment</h3>
+              <p>
+                For each identified person, the tool queries external databases to find contact information, funding
+                status, publication history, and location data, distinguishing between remote work and company HQ.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3>Ranking</h3>
+              <p>
+                A sophisticated propensity-to-buy scoring algorithm ranks leads from 0-100 based on role fit, company
+                funding, scientific activity, technology stack, and location. Instantly prioritize your best prospects.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scoring Section -->
+    <section class="scoring">
+      <div class="container">
+        <h2 class="section-title">Intelligent Propensity Scoring</h2>
+        <p class="section-subtitle">
+          Our ranking algorithm weighs multiple signals to surface the leads most likely to engage with your 3D
+          in-vitro solutions.
+        </p>
+        <div class="scoring-content">
+          <div class="score-table">
+            <div class="score-header">
+              <span>Signal Category</span>
+              <span>Weight</span>
+            </div>
+            <div class="score-row">
+              <span>Scientific Intent (Recent DILI papers)</span>
+              <span>+40 pts</span>
+            </div>
+            <div class="score-row">
+              <span>Role Fit (Toxicology, Safety titles)</span>
+              <span>+30 pts</span>
+            </div>
+            <div class="score-row">
+              <span>Company Intent (Recent funding)</span>
+              <span>+20 pts</span>
+            </div>
+            <div class="score-row">
+              <span>Technographic (Uses in-vitro tech)</span>
+              <span>+15 pts</span>
+            </div>
+            <div class="score-row">
+              <span>Location (Innovation hubs)</span>
+              <span>+10 pts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="container">
+        <h2>Ready to Find Your Best Leads?</h2>
+        <p>Start crawling the web for qualified prospects in minutes. No setup required.</p>
+        <a href="/search" class="btn">Launch Search Agent</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>BioLeadGen - Intelligent Lead Generation for 3D In-Vitro Model Solutions</p>
+      </div>
+    </footer>
+  </body>
+</html>
